@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مرساة | دليل أماكن الدراسة حول الجامعة الأردنية</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f7fb; --card:#fff; --text:#1c2433; --muted:#5f6b7f; --line:#e3e8f0;
+  --primary:#1f6f5c; --primary-soft:#e2f3ee; --accent:#f5a623; --good:#1f8f5f; --bad:#c2483d;
+  --radius:16px; --shadow:0 2px 10px rgba(20,40,70,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0f1520; --card:#18202e; --text:#e8edf5; --muted:#9aa6b8; --line:#2a3447; --primary:#3fb59a; --primary-soft:#173a33; --shadow:none}
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Cairo',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+header{background:linear-gradient(135deg,var(--primary),#14493c);color:#fff;padding:34px 0 32px}
+header h1{font-size:clamp(1.8rem,4.5vw,2.5rem);font-weight:800;letter-spacing:-0.5px}
+header p{opacity:.92;margin-top:4px;font-size:1.05rem}
+.note{background:#fff7e0;color:#7a5a00;border:1px solid #f1dc9a;border-radius:12px;padding:10px 14px;margin:16px 0;font-size:.9rem}
+.controls{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;margin:-20px 0 20px;position:relative;display:grid;gap:12px}
+.controls input,.controls select{width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:12px;font:inherit;background:var(--bg);color:var(--text)}
+.row{display:grid;gap:10px;grid-template-columns:1fr}
+@media(min-width:700px){.row{grid-template-columns:2fr 1fr 1fr}}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--bg);color:var(--text);padding:7px 14px;border-radius:999px;font:inherit;font-size:.9rem;cursor:pointer;transition:all .2s}
+.chip.active{background:var(--primary);border-color:var(--primary);color:#fff}
+h2{font-size:1.25rem;margin:26px 0 12px}
+.count{color:var(--muted);font-size:.9rem;margin-bottom:10px}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(310px,1fr))}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;display:flex;flex-direction:column;gap:10px;border:1px solid var(--line)}
+.card-head{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.card h3{font-size:1.1rem}
+.tag{font-size:.75rem;background:var(--primary-soft);color:var(--primary);padding:2px 10px;border-radius:999px;white-space:nowrap;font-weight:600}
+.loc{color:var(--muted);font-size:.9rem}
+.stars{color:var(--accent);letter-spacing:2px;font-size:1.05rem}
+.stars small{color:var(--muted);letter-spacing:0;font-size:.85rem;margin-inline-start:6px}
+.price{font-size:.92rem;background:var(--bg);border-radius:10px;padding:8px 10px}
+.pc{list-style:none;font-size:.9rem;display:grid;gap:2px}
+.pc li.p::before{content:"＋ ";color:var(--good);font-weight:700}
+.pc li.c::before{content:"－ ";color:var(--bad);font-weight:700}
+.meta{font-size:.85rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px;margin-top:auto}
+.meta a{color:var(--primary);text-decoration:none;font-weight:600}
+.empty{text-align:center;color:var(--muted);padding:30px}
+.tablebox{overflow-x:auto;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;min-width:640px;font-size:.92rem}
+th,td{padding:10px 12px;text-align:right;border-bottom:1px solid var(--line)}
+th{background:var(--primary-soft);color:var(--primary);position:sticky;top:0}
+tr:last-child td{border-bottom:none}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:28px 0 40px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>⚓ مرساة</h1>
+    <p>وجهتك الأولى لأفضل أماكن الدراسة والهدوء داخل وحول الجامعة الأردنية</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="controls">
+    <div class="row">
+      <input id="q" type="search" placeholder="🔍 ابحث بالاسم أو الميزة (صمت، غرف، فايبز، مايندسيت...)">
+      <select id="gate">
+        <option value="">كل البوابات</option>
+      </select>
+      <select id="sort">
+        <option value="nearest">الأقرب للبوابة</option>
+        <option value="cheapest">الأرخص سعراً</option>
+        <option value="rating">الأعلى تقييماً</option>
+      </select>
+    </div>
+    <div class="chips" id="types">
+      <button class="chip active" data-type="">الكل</button>
+      <button class="chip" data-type="ستدي هاوس">ستدي هاوس</button>
+      <button class="chip" data-type="مقهى دراسي">مقهى دراسي</button>
+      <button class="chip" data-type="داخل الحرم">داخل الحرم</button>
+    </div>
+  </div>
+
+  <div class="note">ℹ️ الأسعار وساعات العمل أدناه <strong>تقريبية</strong> بناءً على تجارب الطلبة، وقد تختلف في فترات امتحانات الميد والفاينل أو حسب العروض الفصلية.</div>
+
+  <div class="count" id="count"></div>
+  <section class="grid" id="cards"></section>
+
+  <h2>⚖️ جدول المقارنة السريع</h2>
+  <div class="tablebox">
+    <table>
+      <thead>
+        <tr><th>المكان</th><th>النوع</th><th>أقرب بوابة</th><th>السعر</th><th>الحد الأدنى</th><th>التقييم</th><th>أبرز ميزة</th></tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</main>
+
+<footer>مرساة · صُنع لطلبة الجامعة الأردنية 🇯🇴</footer>
+
+<script>
+const PLACES = [
+  { id:1, name:"مكتبة الجامعة الأردنية (المكتبة الرئيسية)", type:"داخل الحرم", gate:"داخل الحرم الجامعي", walk:1,
+    loc:"وسط الحرم الجامعي — قرب برج الساعة وكليات الآداب والعلوم",
+    hourly:0, priceText:"مجاني بالكامل لطلبة الجامعة (بالهوية الجامعية)", minOrder:0, rating:4.7, reviews:310,
+    pros:["مجانية وهدوء تام","توفر كافة المراجع والكتب","قاعات واسعة ومكيفة"], cons:["تغلق باكراً (حوالي 4:30 عصراً)","ممنوع إدخال المشروبات والمأكولات"],
+    hours:"8:00 ص – 4:30 م (الأحد - الخميس)", contact:"داخل الحرم الجامعي", link:"https://maps.google.com/?q=University+of+Jordan+Library" },
+
+  { id:2, name:"Vibes Study House (فايبز)", type:"ستدي هاوس", gate:"البوابة الشمالية", walk:3,
+    loc:"مقابل البوابة الشمالية مباشرة — شارع الملكة رانيا",
+    hourly:1.0, priceText:"1.00 - 1.50 د.أ/ساعة (تتوفر باقات يومية)", minOrder:0, rating:4.6, reviews:185,
+    pros:["إنترنت فايبر سريع جداً","أجواء دراسية جدية ومشجعة","قريب جداً من البوابة الشمالية"], cons:["يمتلئ بسرعة أيام الامتحانات","الأماكن الفردية محدودة أحياناً"],
+    hours:"8:00 ص – 12:00 م (24 ساعة بالامتحانات)", contact:"إنستغرام: @vibes_studyhouse", link:"https://maps.google.com/?q=Vibes+Study+House+Amman" },
+
+  { id:3, name:"Mindset Study House (مايندسيت)", type:"ستدي هاوس", gate:"البوابة الرئيسية", walk:4,
+    loc:"شارع الجامعة — مقابل البوابة الرئيسية، فوق المحلات التجارية",
+    hourly:1.0, priceText:"1.00 د.أ/ساعة (غالباً يشمل ضيافة بسيطة)", minOrder:0, rating:4.5, reviews:164,
+    pros:["مقسم لمناطق صمت تام ومناطق نقاش","كراسي مريحة للدراسة الطويلة","إضاءة ممتازة"], cons:["صوت الشارع قد يصل خفيفاً في الطوابق الدنيا","ازدحام وقت الذروة"],
+    hours:"8:30 ص – 11:30 م", contact:"إنستغرام: @mindset.jo", link:"https://maps.google.com/?q=Mindset+Study+House+Amman" },
+
+  { id:4, name:"Focus Study House (فوكس)", type:"ستدي هاوس", gate:"بوابة العلوم / الهندسة", walk:3,
+    loc:"مقابل بوابة العلوم والهندسة — منطقة المطاعم والخدمات",
+    hourly:1.0, priceText:"1.00 - 1.25 د.أ/ساعة", minOrder:0, rating:4.4, reviews:132,
+    pros:["الأقرب لطلاب الهندسة والعلوم وتكنولوجيا المعلومات","يوفر غرف للـ Group Study","مقابس كهرباء عند كل طاولة"], cons:["المساحة متوسطة","يحتاج حجز مسبق للغرف الجماعية"],
+    hours:"8:00 ص – 12:00 م", contact:"عبر صفحات التواصل الاجتماعي", link:"https://maps.google.com/?q=University+of+Jordan+Science+Gate" },
+
+  { id:5, name:"Qahwa Black (قهوة بلاك)", type:"مقهى دراسي", gate:"البوابة الشمالية", walk:4,
+    loc:"شارع الجامعة — مقابل البوابة الشمالية",
+    hourly:null, priceText:"سعر المشروب (2.25 - 3.75 د.أ)", minOrder:2.25, rating:4.3, reviews:210,
+    pros:["قهوة مختصة ممتازة","لا يوجد عداد للساعات (اجلس براحتك)","تصميم عصري ومريح"], cons:["مستوى صوت متوسط (أقرب لجو الكافيهات)","بعض الطاولات لا يوجد بجانبها مقابس"],
+    hours:"7:30 ص – 1:00 ص", contact:"فروع شارع الجامعة", link:"https://maps.google.com/?q=Qahwa+Black+University+Street+Amman" },
+
+  { id:6, name:"كافيهات طلعة نيفين / البوابة الرئيسية", type:"مقهى دراسي", gate:"البوابة الرئيسية", walk:5,
+    loc:"مقابل البوابة الرئيسية وطلعة نيفين — شارع الجامعة",
+    hourly:null, priceText:"مشروبات وأراجيل من 2.00 إلى 4.50 د.أ", minOrder:2.0, rating:4.0, reviews:145,
+    pros:["مناسبة جداً للمشاريع الجماعية والنقاشات","تتوفر جلسات خارجية وجلسات للمدخنين","تفتح لساعات متأخرة ليلاً"], cons:["ليست مخصصة للصمت التام","أغلى قليلاً من الـ Study House"],
+    hours:"8:00 ص – 2:00 ص", contact:"شارع الجامعة", link:"https://maps.google.com/?q=University+of+Jordan+Main+Gate" },
+
+  { id:7, name:"Al-Jubeiha Study Spaces (مجمعات الجبيهة)", type:"ستدي هاوس", gate:"بوابة الطب / المستشفى", walk:7,
+    loc:"قرب إشارات المنهل ومستشفى الجامعة الأردنية — الجبيهة",
+    hourly:0.75, priceText:"0.75 - 1.00 د.أ/ساعة (اشتراك شهري مخفض)", minOrder:0, rating:4.5, reviews:98,
+    pros:["مفضل لطلاب الطب والتمريض والصيدلة","أقل ازدحاماً من شارع الجامعة الرئيسي","أسعار منافسة للاشتراكات الطويلة"], cons:["يبعد مشياً حوالي 7-10 دقائق عن الكليات","خيارات المطاعم حوله أقل من البوابة الرئيسية"],
+    hours:"8:00 ص – 1:00 ص", contact:"منطقة الجبيهة - قرب المستشفى", link:"https://maps.google.com/?q=Jordan+University+Hospital" }
+];
+
+const $ = id => document.getElementById(id);
+let typeFilter = "";
+
+[...new Set(PLACES.map(p=>p.gate))].forEach(g=>{
+  const o=document.createElement("option"); o.value=g; o.textContent=g; $("gate").appendChild(o);
+});
+
+const stars = r => "★".repeat(Math.round(r)) + "☆".repeat(5-Math.round(r));
+const costKey = p => p.hourly !== null ? p.hourly : p.minOrder;
+
+function getFiltered(){
+  const q = $("q").value.trim().toLowerCase();
+  const gate = $("gate").value;
+  let list = PLACES.filter(p=>{
+    if(typeFilter && p.type!==typeFilter) return false;
+    if(gate && p.gate!==gate) return false;
+    if(q){
+      const hay = [p.name,p.loc,p.gate,p.type,...p.pros,...p.cons].join(" ").toLowerCase();
+      if(!hay.includes(q)) return false;
+    }
+    return true;
+  });
+  const s = $("sort").value;
+  if(s==="nearest") list.sort((a,b)=>a.walk-b.walk);
+  if(s==="cheapest") list.sort((a,b)=>costKey(a)-costKey(b));
+  if(s==="rating") list.sort((a,b)=>b.rating-a.rating);
+  return list;
+}
+
+function render(){
+  const list = getFiltered();
+  $("count").textContent = `${list.length} مكان متاح`;
+  $("cards").innerHTML = list.length ? list.map(p=>`
+    <article class="card">
+      <div class="card-head"><h3>${p.name}</h3><span class="tag">${p.type}</span></div>
+      <div class="loc">📍 ${p.loc}<br>🚪 ${p.gate} · ~${p.walk} دقائق مشي</div>
+      <div class="stars">${stars(p.rating)}<small>${p.rating.toFixed(1)} (${p.reviews} تقييم)</small></div>
+      <div class="price">💰 ${p.priceText}${p.minOrder?`<br>الحد الأدنى للطلب: ${p.minOrder} د.أ`:""}</div>
+      <ul class="pc">
+        ${p.pros.map(x=>`<li class="p">${x}</li>`).join("")}
+        ${p.cons.map(x=>`<li class="c">${x}</li>`).join("")}
+      </ul>
+      <div class="meta">🕒 ${p.hours}<br>📌 ${p.contact}${p.link?` · <a href="${p.link}" target="_blank" rel="noopener">افتح على الخريطة ↗</a>`:""}</div>
+    </article>`).join("") : `<div class="empty">لا توجد نتائج مطابقة لبحثك 🤷‍♂️</div>`;
+
+  $("tbody").innerHTML = list.map(p=>`
+    <tr>
+      <td><strong>${p.name}</strong></td><td>${p.type}</td><td>${p.gate} (${p.walk} د)</td>
+      <td>${p.hourly===0?"مجاني":(p.hourly!==null?p.hourly+" د.أ/ساعة":"حسب المشروب")}</td>
+      <td>${p.minOrder?p.minOrder+" د.أ":"—"}</td>
+      <td><span class="stars">★</span> ${p.rating.toFixed(1)}</td>
+      <td>${p.pros[0]}</td>
+    </tr>`).join("");
+}
+
+["q","gate","sort"].forEach(id=>$(id).addEventListener("input",render));
+$("types").addEventListener("click",e=>{
+  const b=e.target.closest(".chip"); if(!b) return;
+  document.querySelectorAll(".chip").forEach(c=>c.classList.remove("active"));
+  b.classList.add("active"); typeFilter=b.dataset.type; render();
+});
+render();
+</script>
+</body>
+</html>
