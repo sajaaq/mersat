@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مرساة | دليل أماكن الدراسة حول الجامعة الأردنية</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f7fb; --card:#fff; --text:#1c2433; --muted:#5f6b7f; --line:#e3e8f0;
+  --primary:#1f6f5c; --primary-soft:#e2f3ee; --accent:#f5a623; --good:#1f8f5f; --bad:#c2483d;
+  --radius:16px; --shadow:0 2px 10px rgba(20,40,70,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0f1520; --card:#18202e; --text:#e8edf5; --muted:#9aa6b8; --line:#2a3447; --primary:#3fb59a; --primary-soft:#173a33; --shadow:none}
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Cairo',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+header{background:linear-gradient(135deg,var(--primary),#14493c);color:#fff;padding:34px 0 36px}
+.head-flex{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+header h1{font-size:clamp(1.8rem,4.5vw,2.5rem);font-weight:800;letter-spacing:-0.5px}
+header p{opacity:.92;margin-top:4px;font-size:1.05rem}
+.btn-add-place{background:#fff;color:var(--primary);border:none;padding:10px 18px;border-radius:12px;font:inherit;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.15);transition:transform .15s}
+.btn-add-place:hover{transform:translateY(-2px)}
+.note{background:#fff7e0;color:#7a5a00;border:1px solid #f1dc9a;border-radius:12px;padding:10px 14px;margin:16px 0;font-size:.9rem}
+.controls{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;margin:-20px 0 20px;position:relative;display:grid;gap:12px}
+.controls input,.controls select{width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:12px;font:inherit;background:var(--bg);color:var(--text)}
+.row{display:grid;gap:10px;grid-template-columns:1fr}
+@media(min-width:700px){.row{grid-template-columns:2fr 1fr 1fr}}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--bg);color:var(--text);padding:7px 14px;border-radius:999px;font:inherit;font-size:.9rem;cursor:pointer;transition:all .2s}
+.chip.active{background:var(--primary);border-color:var(--primary);color:#fff}
+h2{font-size:1.25rem;margin:26px 0 12px}
+.count{color:var(--muted);font-size:.9rem;margin-bottom:10px}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(310px,1fr))}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;display:flex;flex-direction:column;gap:10px;border:1px solid var(--line)}
+.card-head{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.card h3{font-size:1.1rem}
+.tag{font-size:.75rem;background:var(--primary-soft);color:var(--primary);padding:2px 10px;border-radius:999px;white-space:nowrap;font-weight:600}
+.loc{color:var(--muted);font-size:.9rem}
+.stars{color:var(--accent);letter-spacing:2px;font-size:1.05rem}
+.stars small{color:var(--muted);letter-spacing:0;font-size:.85rem;margin-inline-start:6px}
+.price{font-size:.92rem;background:var(--bg);border-radius:10px;padding:8px 10px}
+.pc{list-style:none;font-size:.9rem;display:grid;gap:2px}
+.pc li.p::before{content:"＋ ";color:var(--good);font-weight:700}
+.pc li.c::before{content:"－ ";color:var(--bad);font-weight:700}
+.reviews-box{background:var(--bg);border-radius:10px;padding:8px 10px;font-size:.83rem;display:grid;gap:6px}
+.rev-item{border-bottom:1px solid var(--line);padding-bottom:4px}
+.rev-item:last-child{border-bottom:none;padding-bottom:0}
+.card-actions{display:flex;justify-content:space-between;align-items:center;border-top:1px dashed var(--line);padding-top:10px;margin-top:auto;gap:8px;flex-wrap:wrap}
+.meta{font-size:.83rem;color:var(--muted)}
+.meta a{color:var(--primary);text-decoration:none;font-weight:600}
+.btn-rate{background:var(--primary-soft);color:var(--primary);border:none;padding:6px 12px;border-radius:8px;font:inherit;font-size:.83rem;font-weight:700;cursor:pointer}
+.btn-rate:hover{background:var(--primary);color:#fff}
+.empty{text-align:center;color:var(--muted);padding:30px}
+.tablebox{overflow-x:auto;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;min-width:640px;font-size:.92rem}
+th,td{padding:10px 12px;text-align:right;border-bottom:1px solid var(--line)}
+th{background:var(--primary-soft);color:var(--primary);position:sticky;top:0}
+tr:last-child td{border-bottom:none}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:28px 0 40px}
+
+/* النوافذ المنبثقة (Modals) */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;align-items:center;justify-content:center;padding:16px}
+.modal.open{display:flex}
+.modal-box{background:var(--card);border-radius:var(--radius);max-width:460px;width:100%;padding:20px;box-shadow:0 10px 30px rgba(0,0,0,.25);display:grid;gap:12px;max-height:90vh;overflow-y:auto}
+.modal-head{display:flex;justify-content:space-between;align-items:center}
+.close-btn{background:none;border:none;font-size:1.4rem;color:var(--muted);cursor:pointer}
+.form-group{display:grid;gap:4px;font-size:.9rem}
+.form-group label{font-weight:600}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:10px;font:inherit;background:var(--bg);color:var(--text)}
+.star-picker{display:flex;gap:6px;font-size:1.6rem;cursor:pointer;color:var(--muted)}
+.star-picker span.on{color:var(--accent)}
+.btn-submit{background:var(--primary);color:#fff;border:none;padding:11px;border-radius:10px;font:inherit;font-weight:700;cursor:pointer;margin-top:4px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap head-flex">
+    <div>
+      <h1>⚓ مرساة</h1>
+      <p>وجهتك الأولى لأفضل أماكن الدراسة والهدوء داخل وحول الجامعة الأردنية</p>
+    </div>
+    <button class="btn-add-place" id="openAddModal">＋ اقترح مكان دراسة جديد</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="controls">
+    <div class="row">
+      <input id="q" type="search" placeholder="🔍 ابحث بالاسم أو الميزة (صمت، غرف، فايبز، مايندسيت...)">
+      <select id="gate">
+        <option value="">كل البوابات</option>
+      </select>
+      <select id="sort">
+        <option value="nearest">الأقرب للبوابة</option>
+        <option value="cheapest">الأرخص سعراً</option>
+        <option value="rating">الأعلى تقييماً</option>
+      </select>
+    </div>
+    <div class="chips" id="types">
+      <button class="chip active" data-type="">الكل</button>
+      <button class="chip" data-type="ستدي هاوس">ستدي هاوس</button>
+      <button class="chip" data-type="مقهى دراسي">مقهى دراسي</button>
+      <button class="chip" data-type="داخل الحرم">داخل الحرم</button>
+    </div>
+  </div>
+
+  <div class="note">ℹ️ الأسعار وساعات العمل أدناه <strong>تقريبية</strong> بناءً على تجارب الطلبة. يمكنك إضافة تقييمك لأي مكان أو اقتراح مكان جديد ليظهر للجميع!</div>
+
+  <div class="count" id="count"></div>
+  <section class="grid" id="cards"></section>
+
+  <h2>⚖️ جدول المقارنة السريع</h2>
+  <div class="tablebox">
+    <table>
+      <thead>
+        <tr><th>المكان</th><th>النوع</th><th>أقرب بوابة</th><th>السعر</th><th>الحد الأدنى</th><th>التقييم</th><th>أبرز ميزة</th></tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</main>
+
+<footer>مرساة · صُنع لطلبة الجامعة الأردنية 🇯🇴</footer>
+
+<!-- نافذة إضافة تقييم -->
+<div class="modal" id="rateModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="ratePlaceTitle">تقييم المكان</h3>
+      <button class="close-btn" data-close="rateModal">&times;</button>
+    </div>
+    <form id="rateForm" style="display:grid;gap:12px">
+      <input type="hidden" id="ratePlaceId">
+      <div class="form-group">
+        <label>تقييمك بالنجوم:</label>
+        <div class="star-picker" id="starPicker">
+          <span data-v="1" class="on">★</span>
+          <span data-v="2" class="on">★</span>
+          <span data-v="3" class="on">★</span>
+          <span data-v="4" class="on">★</span>
+          <span data-v="5" class="on">★</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>اسمك (أو لقبك الجامعي):</label>
+        <input type="text" id="revAuthor" placeholder="مثال: طالب هندسة" required>
+      </div>
+      <div class="form-group">
+        <label>رأيك بالمكان (الهدوء، النت، الأسعار):</label>
+        <textarea id="revText" rows="3" placeholder="اكتب تجربتك باختصار..." required></textarea>
+      </div>
+      <button type="submit" class="btn-submit">نشر التقييم</button>
